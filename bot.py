@@ -17,11 +17,13 @@ api = tweepy.API(auth)
 
 FILE_NAME = 'last_seen.txt'
 
-options = webdriver.ChromeOptions()
-options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-options.headless = True
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
 
-driver = webdriver.Chrome(executable_path= os.environ.get("CHROMEDRIVER_PATH"), options=options)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
 
 media_ids = []
 
@@ -76,4 +78,4 @@ while True:
     except:
         time.sleep(15)
         continue
-    time.sleep(13)
+    time.sleep(15)
