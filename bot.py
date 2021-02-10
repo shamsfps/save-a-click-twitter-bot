@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.options import Options
 
 consumer_key=environ['consumer_key']
 consumer_secret=environ['consumer_secret']
-
 key=environ['key']
 secret=environ['secret']
 
