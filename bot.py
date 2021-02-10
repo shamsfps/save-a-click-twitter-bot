@@ -49,13 +49,12 @@ def reply():
             driver.set_window_size(S('Width'),S('Height')-(S('Height')*0.4)) # May need manual adjustment
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')
             driver.quit()
-
             media = api.media_upload('screenshot.png')
             media_ids.append(media.media_id)
             api.update_status('@'+tweet.user.screen_name, tweet.id, media_ids=media_ids)
-            store_last_seen(FILE_NAME,tweet.id)
             os.remove('screenshot.png')
             media_ids.clear()
+            store_last_seen(FILE_NAME,tweet.id)
 
 def get_url(tweet):
     if tweet.in_reply_to_status_id is None:
