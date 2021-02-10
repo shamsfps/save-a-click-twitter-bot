@@ -18,8 +18,10 @@ api = tweepy.API(auth)
 FILE_NAME = 'last_seen.txt'
 
 options = webdriver.ChromeOptions()
+options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 options.headless = True
-driver = webdriver.Chrome(options=options)
+
+driver = webdriver.Chrome(executable_path= os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
 
 media_ids = []
 
