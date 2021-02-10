@@ -21,7 +21,7 @@ options = webdriver.ChromeOptions()
 options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 options.headless = True
 
-driver = webdriver.Chrome(executable_path= os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
+driver = webdriver.Chrome(executable_path= os.environ.get("CHROMEDRIVER_PATH"), options=options)
 
 media_ids = []
 
