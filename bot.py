@@ -28,11 +28,11 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), o
 
 media_ids = []
 
-file = 'last_seen.txt'
+file = "last_seen.txt"
 file_location = f"/Last Seen ID/{file}"
 
 def read_file(dbx, file):
-    _,f = dbx.files_download(file)
+    _, f = dbx.files_download(file)
     f = f.content
     f = f.decode("utf-8")
     return f
