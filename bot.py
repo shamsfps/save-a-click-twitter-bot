@@ -6,6 +6,7 @@ import os
 from os import environ
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from secrets import TOKEN
 
 consumer_key=environ['consumer_key']
 consumer_secret=environ['consumer_secret']
@@ -16,7 +17,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
 
-dbx = dropbox.Dropbox(environ['TOKEN'])
+dbx = dropbox.Dropbox(TOKEN)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -41,6 +42,12 @@ def upload_file(dbx, file_location, file):
     with open(file, "rb") as f:
         dbx.files_upload(f.read(),file_location,mode=dropbox.files.WriteMode.overwrite)
 
+def store_last_seen(FILE_NAME,last_seen_id):
+    file_write = open(file,'w')
+    file_write.write(str(last_seen_id))
+    file_write.close()
+    return
+
 def reply():
     tweets = api.mentions_timeline(read_file(dbx, file_location),tweet_mode='extended')
     for tweet in reversed(tweets):
@@ -58,6 +65,7 @@ def reply():
             os.remove('screenshot.png')
             media_ids.clear()
 
+            store_last_seen(file,tweet.id)
             upload_file(dbx, file_location, file)
 
 def get_url(tweet):
