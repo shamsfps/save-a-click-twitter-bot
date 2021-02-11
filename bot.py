@@ -44,6 +44,7 @@ def reply():
     for tweet in reversed(tweets):
         url = get_url(tweet)
         if url != "":
+            store_last_seen(FILE_NAME,tweet.id)
             driver.get(url)
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')-(S('Height')*0.4)) # May need manual adjustment
@@ -54,7 +55,6 @@ def reply():
             api.update_status('@'+tweet.user.screen_name, tweet.id, media_ids=media_ids)
             os.remove('screenshot.png')
             media_ids.clear()
-            store_last_seen(FILE_NAME,tweet.id)
 
 def get_url(tweet):
     if tweet.in_reply_to_status_id is None:
