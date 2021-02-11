@@ -15,7 +15,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
 
-FILE_NAME = 'last_seen.txt'
+FILE_NAME = './last_seen.txt'
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
