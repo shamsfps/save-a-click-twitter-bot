@@ -11,8 +11,6 @@ consumer_secret=environ['consumer_secret']
 key=environ['key']
 secret=environ['secret']
 
-last_seen=environ['last_seen']
-
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
@@ -28,6 +26,7 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), o
 media_ids = []
 
 def reply():
+    last_seen=environ['last_seen']
     tweets = api.mentions_timeline(last_seen,tweet_mode='extended')
     for tweet in reversed(tweets):
         url = get_url(tweet)
