@@ -6,10 +6,9 @@ import os
 from os import environ
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from secrets import TOKEN
 
 
-dbx = dropbox.Dropbox(TOKEN)
+dbx = dropbox.Dropbox(environ['TOKEN'])
 
 consumer_key=environ['consumer_key']
 consumer_secret=environ['consumer_secret']
