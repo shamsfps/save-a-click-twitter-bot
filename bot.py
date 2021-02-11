@@ -54,9 +54,11 @@ def reply():
         url = get_url(tweet)
         if url != "":
             driver.get(url)
-            S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            driver.set_window_size(S('Width'),S('Height')-(S('Height')*0.4)) # May need manual adjustment
-            driver.find_element_by_tag_name('body').screenshot('screenshot.png')
+            #S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
+            #driver.set_window_size(S('Width'),S('Height')-(S('Height')*0.4)) # May need manual adjustment
+            #driver.find_element_by_tag_name('body').screenshot('screenshot.png')
+            #driver.quit()
+            driver.get_screenshot_as_file("screenshot.png")
             driver.quit()
 
             media = api.media_upload('screenshot.png')
