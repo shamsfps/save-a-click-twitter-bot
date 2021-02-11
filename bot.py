@@ -25,13 +25,26 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), o
 
 media_ids = []
 
+FILE_NAME = 'last_seen.txt'
+
+def read_last_seen(FILE_NAME):
+    file_read = open(FILE_NAME, 'r')
+    last_seen_id = int(file_read.read().strip())
+    file_read.close()
+    return last_seen_id
+
+def store_last_seen(FILE_NAME,last_seen_id):
+    file_write = open(FILE_NAME,'w')
+    file_write.write(str(last_seen_id))
+    file_write.close()
+    return
+
 def reply():
-    last_seen=environ['last_seen']
-    tweets = api.mentions_timeline(last_seen,tweet_mode='extended')
+    tweets = api.mentions_timeline(read_last_seen(FILE_NAME),tweet_mode='extended')
     for tweet in reversed(tweets):
         url = get_url(tweet)
         if url != "":
-            os.environ["last_seen"] = tweet.id
+            store_last_seen(FILE_NAME,tweet.id)
             driver.get(url)
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')-(S('Height')*0.4)) # May need manual adjustment
