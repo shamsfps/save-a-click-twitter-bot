@@ -86,7 +86,4 @@ while True:
     except tweepy.TweepError:
         time.sleep(15)
         continue
-    except:
-        time.sleep(15)
-        continue
     time.sleep(15)
