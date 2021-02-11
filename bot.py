@@ -38,7 +38,7 @@ def read_file(dbx, file):
     return f
 
 def upload_file(dbx, file_location, file):
-    with open(file, "rb") as :
+    with open(file, "rb") as f:
         dbx.files_upload(f.read(),file_location,mode=dropbox.files.WriteMode.overwrite)
 
 def reply():
