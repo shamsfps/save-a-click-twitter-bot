@@ -8,6 +8,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from secrets import TOKEN
 
+
+dbx = dropbox.Dropbox(TOKEN)
+
 consumer_key=environ['consumer_key']
 consumer_secret=environ['consumer_secret']
 key=environ['key']
@@ -16,8 +19,6 @@ secret=environ['secret']
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
-
-dbx = dropbox.Dropbox(TOKEN)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -30,7 +31,7 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), o
 media_ids = []
 
 file = "last_seen.txt"
-file_location = f"/Last Seen ID/{file}"
+file_location = f"/LastSeen/{file}"
 
 def read_file(dbx, file):
     _, f = dbx.files_download(file)
@@ -80,13 +81,15 @@ def get_url(tweet):
             url = urls[0]['expanded_url']
             return url
 
-while True:
-    try:
-        reply()
-    except tweepy.TweepError:
-        time.sleep(15)
-        continue
-    except:
-        time.sleep(15)
-        continue
-    time.sleep(15)
+#while True:
+#    try:
+#        reply()
+#    except tweepy.TweepError:
+#        time.sleep(15)
+#        continue
+#    except:
+#        time.sleep(15)
+#        continue
+#    time.sleep(15)
+
+upload_file(dbx, file_location, file)
