@@ -25,8 +25,6 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-
 media_ids = []
 
 file = "last_seen.txt"
@@ -53,12 +51,11 @@ def reply():
     for tweet in reversed(tweets):
         url = get_url(tweet)
         if url != "":
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
-            #S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            #driver.set_window_size(S('Width'),S('Height')-(S('Height')*0.4)) # May need manual adjustment
-            #driver.find_element_by_tag_name('body').screenshot('screenshot.png')
-            #driver.quit()
-            driver.get_screenshot_as_file("screenshot.png")
+            S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
+            driver.set_window_size(S('Width'),(S('Height')-(S('Height')*0.3))) # May need manual adjustment
+            driver.find_element_by_tag_name('body').screenshot('screenshot.png')
             driver.quit()
 
             media = api.media_upload('screenshot.png')
@@ -85,7 +82,7 @@ def get_url(tweet):
 while True:
     try:
         reply()
-    except tweepy.TweepError:
+    except:
         time.sleep(15)
         continue
     time.sleep(15)
