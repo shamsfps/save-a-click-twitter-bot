@@ -81,15 +81,13 @@ def get_url(tweet):
             url = urls[0]['expanded_url']
             return url
 
-#while True:
-#    try:
-#        reply()
-#    except tweepy.TweepError:
-#        time.sleep(15)
-#        continue
-#    except:
-#        time.sleep(15)
-#        continue
-#    time.sleep(15)
-
-upload_file(dbx, file_location, file)
+while True:
+    try:
+        reply()
+    except tweepy.TweepError:
+        time.sleep(15)
+        continue
+    except:
+        time.sleep(15)
+        continue
+    time.sleep(15)
