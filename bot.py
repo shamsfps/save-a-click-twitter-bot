@@ -6,7 +6,6 @@ import os
 from os import environ
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from PIL import Image
 
 dbx = dropbox.Dropbox(environ['TOKEN'])
 
@@ -56,22 +55,16 @@ def reply():
             driver.get(url)
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            driver.set_window_size(S('Width'),S('Height'))
+            driver.set_window_size(S('Width'),S('Height')/4)
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')
 
             
             driver.quit()
 
-            im = Image.open('screenshot.png')
-            width, height = im.size
-            im = im.crop((0, 0, 0, height/4))
-            im.save('screenshot1.png')
-
-            media = api.media_upload('screenshot1.png')
+            media = api.media_upload('screenshot.png')
             media_ids.append(media.media_id)
             api.update_status('@'+tweet.user.screen_name, tweet.id, media_ids=media_ids)
             os.remove('screenshot.png')
-            os.remove('screenshot1.png')
             media_ids.clear()
 
             store_last_seen(file,tweet.id)
