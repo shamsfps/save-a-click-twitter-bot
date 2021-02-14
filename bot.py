@@ -6,7 +6,7 @@ import os
 from os import environ
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
+from PIL import Image
 
 dbx = dropbox.Dropbox(environ['TOKEN'])
 
@@ -24,6 +24,7 @@ chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument('--start-maximized')
 
 media_ids = []
 
@@ -53,15 +54,24 @@ def reply():
         if url != "":
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
+
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            driver.set_window_size(S('Width'),(S('Height')-(S('Height')*0.3))) # May need manual adjustment
+            driver.set_window_size(S('Width'),S('Height'))
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')
+
+            
             driver.quit()
 
-            media = api.media_upload('screenshot.png')
+            im = Image.open('screenshot.png')
+            width, height = im.size
+            im = im.crop((0, 0, 0, height/4))
+            im.save('screenshot1.png')
+
+            media = api.media_upload('screenshot1.png')
             media_ids.append(media.media_id)
             api.update_status('@'+tweet.user.screen_name, tweet.id, media_ids=media_ids)
             os.remove('screenshot.png')
+            os.remove('screenshot1.png')
             media_ids.clear()
 
             store_last_seen(file,tweet.id)
