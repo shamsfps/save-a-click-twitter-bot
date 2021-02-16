@@ -55,7 +55,7 @@ def reply():
             driver.get(url)
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            driver.set_window_size(S('Width'),S('Height')/4)
+            driver.set_window_size(S('Width'),S('Height')/1.5)
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')
 
             
