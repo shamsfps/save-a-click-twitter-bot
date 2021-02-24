@@ -24,6 +24,7 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--start-maximized')
+chrome_options.add_experimental_option("prefs", {"profile.default_content_setting_values.cookies": 2})
 
 media_ids = []
 
@@ -52,8 +53,6 @@ def reply():
         url = get_url(tweet)
         if url != "":
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-            driver.get("http://example.com/some404page")
-            driver.add_cookie({"name": "key", "value": "value"})
             driver.get(url)
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
