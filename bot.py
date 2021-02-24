@@ -52,9 +52,9 @@ def reply():
         url = get_url(tweet)
         if url != "":
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-            driver.get(url)
+            driver.get("http://example.com/some404page")
             driver.add_cookie({"name": "key", "value": "value"})
-            driver.refresh()
+            driver.get(url)
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
