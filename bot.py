@@ -4,6 +4,7 @@ import dropbox
 import os
 from os import environ
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 dbx = dropbox.Dropbox(environ['TOKEN'])
 
@@ -18,7 +19,6 @@ api = tweepy.API(auth)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-chrome_options.add_experimental_option("prefs", {"profile.block_third_party_cookies": True})
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
@@ -28,6 +28,11 @@ media_ids = []
 
 file = "last_seen.txt"
 file_location = f"/LastSeen/{file}"
+
+cookies_accept = "//*[@title='Accept Cookies']";
+accept = "//*[@title='Accept']";
+cookies_consent = "//*[@title='I consent']";
+cookies_gotIt = "//a[text()='Got it!']";
 
 def read_file(dbx, file):
     _, f = dbx.files_download(file)
@@ -55,9 +60,17 @@ def reply():
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
-            driver.find_element_by_tag_name('body').screenshot('screenshot.png')
-
             
+            if(check_exists_by_xpath(cookies_accept)):
+                driver.find_element_by_xpath(cookies_accept).click()
+            elif(check_exists_by_xpath(accept)):
+                driver.find_element_by_xpath(accept).click()
+            elif(check_exists_by_xpath(cookies_consent)):
+                driver.find_element_by_xpath(cookies_consent).click()
+            elif(check_exists_by_xpath(cookies_gotIt)):
+                driver.find_element_by_xpath(cookies_gotIt).click()
+
+            driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
 
             media = api.media_upload('screenshot.png')
@@ -80,6 +93,13 @@ def get_url(tweet):
         else:
             url = urls[0]['expanded_url']
             return url
+
+def check_exists_by_xpath(xpath):
+    try:
+        webdriver.find_element_by_xpath(xpath)
+    except:
+        return False
+    return True
 
 while True:
     try:
