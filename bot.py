@@ -56,8 +56,8 @@ def reply():
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
             
-            alert = driver.switch_to_alert
-            alert.accept()
+            for button in WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//*[contains(text(), 'I Consent')]"))):
+                button.click()
 
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
