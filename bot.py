@@ -1,6 +1,5 @@
 import tweepy
 import time
-import random
 import dropbox
 import os
 from os import environ
