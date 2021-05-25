@@ -55,9 +55,6 @@ def reply():
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
-            
-            for button in WebDriverWait(driver, 6).until(EC.visibility_of_all_elements_located((By.XPATH, "//button[contains(., 'I Consent')]"))):
-                button.click()
 
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
@@ -82,6 +79,13 @@ def get_url(tweet):
         else:
             url = urls[0]['expanded_url']
             return url
+
+def check_exists_by_xpath(xpath):
+    try:
+        webdriver.find_element_by_xpath(xpath)
+    except:
+        return False
+    return True
 
 while True:
     try:
