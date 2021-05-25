@@ -29,11 +29,6 @@ media_ids = []
 file = "last_seen.txt"
 file_location = f"/LastSeen/{file}"
 
-cookies_accept = "//*[@title='Accept Cookies']";
-accept = "//*[@title='Accept']";
-cookies_consent = "//*[@title='I Consent']";
-cookies_gotIt = "//a[text()='I Consent']";
-
 def read_file(dbx, file):
     _, f = dbx.files_download(file)
     f = f.content
@@ -61,14 +56,8 @@ def reply():
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
             
-            if(check_exists_by_xpath(cookies_accept)):
-                driver.find_element_by_xpath(cookies_accept).click()
-            elif(check_exists_by_xpath(accept)):
-                driver.find_element_by_xpath(accept).click()
-            elif(check_exists_by_xpath(cookies_consent)):
-                driver.find_element_by_xpath(cookies_consent).click()
-            elif(check_exists_by_xpath(cookies_gotIt)):
-                driver.find_element_by_xpath(cookies_gotIt).click()
+            alert = driver.switch_to_alert
+            alert.accept()
 
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
@@ -93,13 +82,6 @@ def get_url(tweet):
         else:
             url = urls[0]['expanded_url']
             return url
-
-def check_exists_by_xpath(xpath):
-    try:
-        webdriver.find_element_by_xpath(xpath)
-    except:
-        return False
-    return True
 
 while True:
     try:
