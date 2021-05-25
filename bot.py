@@ -4,7 +4,6 @@ import dropbox
 import os
 from os import environ
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 dbx = dropbox.Dropbox(environ['TOKEN'])
 
