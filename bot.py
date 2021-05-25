@@ -32,7 +32,7 @@ file_location = f"/LastSeen/{file}"
 cookies_accept = "//*[@title='Accept Cookies']";
 accept = "//*[@title='Accept']";
 cookies_consent = "//*[@title='I Consent']";
-cookies_gotIt = "//a[text()='Got it!']";
+cookies_gotIt = "//a[text()='I Consent']";
 
 def read_file(dbx, file):
     _, f = dbx.files_download(file)
