@@ -55,21 +55,18 @@ def reply():
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/2)
             
-            try:
-                buttons = driver.find_elements_by_xpath("//button[contains(., 'Accept')]")
-                for btn in buttons:
-                    btn.click()
-            except:
-                try:
-                    buttons = driver.find_elements_by_xpath("//button[contains(., 'Consent')]")
-                    for btn in buttons:
-                        btn.click()
-                except: 
-                    try:
-                        buttons = driver.find_elements_by_xpath("//button[contains(., 'Got It')]")
-                        for btn in buttons:
-                            btn.click()
-                    except: pass     
+            buttons = driver.find_elements_by_xpath("//button[contains(., 'Accept')]")
+            for btn in buttons:
+                btn.click()
+
+            buttons = driver.find_elements_by_xpath("//button[contains(., 'Consent')]")
+            for btn in buttons:
+                btn.click()
+
+            buttons = driver.find_elements_by_xpath("//button[contains(., 'Got It')]")
+            for btn in buttons:
+                btn.click()
+   
 
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
