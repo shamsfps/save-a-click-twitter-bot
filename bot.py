@@ -21,6 +21,7 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--user-data-dir=chrome-data")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--start-maximized')
 
@@ -53,9 +54,18 @@ def reply():
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
 
+            if(check_exists_by_xpath("//button[contains(., 'Accept')]")):
+                driver.find_element_by_xpath("//button[contains(., 'Accept')]").click()
+            elif(check_exists_by_xpath("//button[contains(., 'Cookies')]")):
+                driver.find_element_by_xpath("//button[contains(., 'Cookies')]").click()
+            elif(check_exists_by_xpath("//button[contains(., 'Consent')]")):
+                driver.find_element_by_xpath("//button[contains(., 'Consent')]").click()
+            elif(check_exists_by_xpath("//button[contains(., 'Got It')]")):
+                driver.find_element_by_xpath("//button[contains(., 'Got It')]").click()
+
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
-
+            
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
 
