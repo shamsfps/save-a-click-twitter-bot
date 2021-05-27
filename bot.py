@@ -4,7 +4,6 @@ import dropbox
 import os
 from os import environ
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
 
 dbx = dropbox.Dropbox(environ['TOKEN'])
 
@@ -99,7 +98,8 @@ def get_url(tweet):
 while True:
     try:
         reply()
-    except:
+    except Exception as e:
+        print(str(e))
         time.sleep(15)
         continue
     time.sleep(15)
