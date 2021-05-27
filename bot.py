@@ -55,13 +55,21 @@ def reply():
             driver.get(url)
 
             if(check_exists_by_xpath("//button[contains(text(), 'Accept')]")):
-                driver.find_element_by_xpath("//button[contains(text(), 'Accept')]").click()
+                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Accept')]").click()
+                for btn in buttons:
+                    btn.click()
             elif(check_exists_by_xpath("//button[contains(text(), 'Cookies')]")):
-                driver.find_element_by_xpath("//button[contains(text(), 'Cookies')]").click()
+                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Cookies')]").click()
+                for btn in buttons:
+                    btn.click()
             elif(check_exists_by_xpath("//button[contains(text(), 'Consent')]")):
-                driver.find_element_by_xpath("//button[contains(text(), 'Consent')]").click()
+                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Consent')]").click()
+                for btn in buttons:
+                    btn.click()
             elif(check_exists_by_xpath("//button[contains(text(), 'Got It')]")):
-                driver.find_element_by_xpath("//button[contains(text(), 'Got It')]").click()
+                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Got It')]").click()
+                for btn in buttons:
+                    btn.click()
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
