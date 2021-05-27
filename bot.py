@@ -39,7 +39,7 @@ def upload_file(dbx, file_location, file):
     with open(file, "rb") as f:
         dbx.files_upload(f.read(),file_location,mode=dropbox.files.WriteMode.overwrite)
 
-def store_last_seen(last_seen_id):
+def store_last_seen(file_name, last_seen_id):
     file_write = open(file,'w')
     file_write.write(str(last_seen_id))
     file_write.close()
@@ -53,8 +53,21 @@ def reply():
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
             
-            
-                    
+            try:
+                buttons = driver.find_elements_by_xpath("//button[contains(., 'Accept')]")
+                for btn in buttons:
+                    btn.click()
+            except:
+                try:
+                    buttons = driver.find_elements_by_xpath("//button[contains(., 'Consent')]")
+                    for btn in buttons:
+                        btn.click()
+                except: 
+                    try:
+                        buttons = driver.find_elements_by_xpath("//button[contains(., 'Got It')]")
+                        for btn in buttons:
+                            btn.click()
+                    except: pass     
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
@@ -68,7 +81,7 @@ def reply():
             os.remove('screenshot.png')
             media_ids.clear()
 
-            store_last_seen(tweet.id)
+            store_last_seen(file,tweet.id)
             upload_file(dbx, file_location, file)
 
 def get_url(tweet):
