@@ -53,7 +53,7 @@ def reply():
             driver.get(url)
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            driver.set_window_size(S('Width'),S('Height')/1.5)
+            driver.set_window_size(S('Width'),S('Height')/2)
             
             try:
                 buttons = driver.find_elements_by_xpath("//button[contains(., 'Accept')]")
