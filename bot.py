@@ -54,6 +54,12 @@ def reply():
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
 
+
+            buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Consent')]")
+            for btn in buttons:
+                btn.click()
+
+
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
 
