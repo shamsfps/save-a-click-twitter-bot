@@ -53,11 +53,16 @@ def reply():
         if url != "":
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
-
-
-            buttons = driver.find_elements_by_xpath("//button[contains(., 'Consent')]")
-            for btn in buttons:
-                btn.click()
+            
+            
+            if(check_exists_by_xpath("//button[contains(., 'Consent')]")):
+                buttons = driver.find_elements_by_xpath("//button[contains(., 'Consent')]")
+                for btn in buttons:
+                    btn.click()
+            elif(check_exists_by_xpath("//button[contains(., 'Got It')]")):
+                buttons = driver.find_elements_by_xpath("//button[contains(., 'Got It')]")
+                for btn in buttons:
+                    btn.click()
 
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
