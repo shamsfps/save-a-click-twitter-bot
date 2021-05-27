@@ -51,6 +51,9 @@ def reply():
         if url != "":
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
+
+            S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
+            driver.set_window_size(S('Width'),S('Height')/1.5)
             
             try:
                 buttons = driver.find_elements_by_xpath("//button[contains(., 'Accept')]")
@@ -67,9 +70,6 @@ def reply():
                         for btn in buttons:
                             btn.click()
                     except: pass     
-
-            S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
-            driver.set_window_size(S('Width'),S('Height')/1.5)
 
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
