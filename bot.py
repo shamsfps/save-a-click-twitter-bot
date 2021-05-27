@@ -21,7 +21,6 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--user-data-dir=chrome-data")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--start-maximized')
 
@@ -40,7 +39,7 @@ def upload_file(dbx, file_location, file):
     with open(file, "rb") as f:
         dbx.files_upload(f.read(),file_location,mode=dropbox.files.WriteMode.overwrite)
 
-def store_last_seen(FILE_NAME,last_seen_id):
+def store_last_seen(last_seen_id):
     file_write = open(file,'w')
     file_write.write(str(last_seen_id))
     file_write.close()
@@ -78,7 +77,7 @@ def reply():
             os.remove('screenshot.png')
             media_ids.clear()
 
-            store_last_seen(file,tweet.id)
+            store_last_seen(tweet.id)
             upload_file(dbx, file_location, file)
 
 def get_url(tweet):
@@ -92,13 +91,6 @@ def get_url(tweet):
         else:
             url = urls[0]['expanded_url']
             return url
-
-def check_exists_by_xpath(xpath):
-    try:
-        webdriver.find_element_by_xpath(xpath)
-    except:
-        return False
-    return True
 
 while True:
     try:
