@@ -55,7 +55,7 @@ def reply():
             driver.get(url)
 
 
-            buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Consent')]")
+            buttons = driver.find_elements_by_xpath("//button[contains(., 'Consent')]")
             for btn in buttons:
                 btn.click()
 
