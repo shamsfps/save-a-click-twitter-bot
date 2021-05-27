@@ -54,18 +54,18 @@ def reply():
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
 
-            if(check_exists_by_xpath("//button[contains(., 'Accept')]")):
-                driver.find_element_by_xpath("//button[contains(., 'Accept')]").click()
-            elif(check_exists_by_xpath("//button[contains(., 'Cookies')]")):
-                driver.find_element_by_xpath("//button[contains(., 'Cookies')]").click()
-            elif(check_exists_by_xpath("//button[contains(., 'Consent')]")):
-                driver.find_element_by_xpath("//button[contains(., 'Consent')]").click()
-            elif(check_exists_by_xpath("//button[contains(., 'Got It')]")):
-                driver.find_element_by_xpath("//button[contains(., 'Got It')]").click()
+            if(check_exists_by_xpath("//button[contains(text(), 'Accept')]")):
+                driver.find_element_by_xpath("//button[contains(text(), 'Accept')]").click()
+            elif(check_exists_by_xpath("//button[contains(text(), 'Cookies')]")):
+                driver.find_element_by_xpath("//button[contains(text(), 'Cookies')]").click()
+            elif(check_exists_by_xpath("//button[contains(text(), 'Consent')]")):
+                driver.find_element_by_xpath("//button[contains(text(), 'Consent')]").click()
+            elif(check_exists_by_xpath("//button[contains(text(), 'Got It')]")):
+                driver.find_element_by_xpath("//button[contains(text(), 'Got It')]").click()
 
             S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
             driver.set_window_size(S('Width'),S('Height')/1.5)
-            
+
             driver.find_element_by_tag_name('body').screenshot('screenshot.png')            
             driver.quit()
 
