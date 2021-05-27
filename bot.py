@@ -54,20 +54,20 @@ def reply():
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
             driver.get(url)
 
-            if(check_exists_by_xpath("//button[contains(text(), 'Accept')]")):
-                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Accept')]").click()
+            if(check_exists_by_xpath("//*[contains(text(), 'Accept')]")):
+                buttons = driver.find_elements_by_xpath("//*[contains(text(), 'Accept')]").click()
                 for btn in buttons:
                     btn.click()
-            elif(check_exists_by_xpath("//button[contains(text(), 'Cookies')]")):
-                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Cookies')]").click()
+            elif(check_exists_by_xpath("//*[contains(text(), 'Cookies')]")):
+                buttons = driver.find_elements_by_xpath("//*[contains(text(), 'Cookies')]").click()
                 for btn in buttons:
                     btn.click()
-            elif(check_exists_by_xpath("//button[contains(text(), 'Consent')]")):
-                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Consent')]").click()
+            elif(check_exists_by_xpath("//*[contains(text(), 'Consent')]")):
+                buttons = driver.find_elements_by_xpath("//*[contains(text(), 'Consent')]").click()
                 for btn in buttons:
                     btn.click()
-            elif(check_exists_by_xpath("//button[contains(text(), 'Got It')]")):
-                buttons = driver.find_elements_by_xpath("//button[contains(text(), 'Got It')]").click()
+            elif(check_exists_by_xpath("//*[contains(text(), 'Got It')]")):
+                buttons = driver.find_elements_by_xpath("//*[contains(text(), 'Got It')]").click()
                 for btn in buttons:
                     btn.click()
 
